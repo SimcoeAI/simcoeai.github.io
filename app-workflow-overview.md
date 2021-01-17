@@ -1,6 +1,8 @@
 # Simcoe AI application workflow overview
 Simcoe AI is a complex, secure, cloud-hosted and AI-powered application that employs sophisticated algorithms to determine the closest talent match to a given initiative or job description contextually. Its world-class security implementation brings a lot of peace of mind when integrating it with other Human Resource and ATS applications.
 
+The application compromises a handful number of major components working together to deliver short listed candidates. In a high level picture, 
+
 ## Simcoe AI is scalable
 The application is at the user's disposal, and it scales out automatically on the cloud to harness more resources to process applicants' resumes. This demand-driven architecture lets the system match talents to the job description more rapidly and efficiently.
 
@@ -19,5 +21,15 @@ Resumes in any format like Microsoft Word, PDF or plain text are retained in "La
 ## Simcoe AI's interview
 Users can design interviews and send them to the best matches (higher-ranked candidates) by email. An algorithm collects candidates' answers and combines them with search results to compute the final candidates' scores.
 
-## High-level diagram
-The following diagram depicts the workflow of the application.
+## The high-level picture
+The application compromises a handful number of major components working together to ultimately deliver a short list of more qualified candidates. In a high-level picture, they are:
+
+* Authentication and security layer
+* Provisioning component
+* Gateway Web Api to collect POST requests
+* Contextual and AI-powered search capability
+* Interview producer and collector
+* Formula system to compute the final ranks
+* Status reporter to send out final results
+
+The following diagram depicts further details on how the system components work together.
