@@ -19,17 +19,35 @@ Simcoe AI's architecture is event-driven and it informs the users once the resul
 Resumes in any format like Microsoft Word, PDF or plain text are retained in "Lakes" where they can be searched based on the job descriptions stored in the system. Each team member can choose any lakes available in the company account to run their search campaign.
 
 ## Simcoe AI's interview
-Users can design interviews and send them to the best matches (higher-ranked candidates) by email. An algorithm collects candidates' answers and combines them with search results to compute the final candidates' scores.
+Users can design interviews and get them sent to the short-listed higheset-ranked candidates. There is an algorithm that collects candidates' answers and combines them with search results to compute the final candidates' scores.
 
 ## The high-level picture
-The application compromises a handful number of major components working together to ultimately deliver a short list of more qualified candidates. In a high-level picture, they are:
+The application compromises a handful number of major components working together to ultimately deliver a short list of more qualified candidates.
 
-* Authentication and security layer
-* Provisioning component
-* Gateway Web Api to collect POST requests
-* Contextual and AI-powered search capability
-* Interview producer and collector
-* Formula system to compute the final ranks
-* Status reporter to send out final results
+### Asynchronous request/response pattern
+The architecture of the application allows the integrated client applications submit web requests to the Gateway Api and receive an acknowledgment almost immediately. The Gateway Api submits the request to the backend and once the results are ready, they are comunicated to the integrated client application by web sockets in a real-time fashion.
 
-The following diagram depicts further details on how the system components work together.
+The following diagram depicts this mechanism:
+
+![hla1](assets/hla1.png)
+
+### Major components of the system
+TThe system compromises the following major components:
+
+* A set of repositories to retain talents' resumes named as "Lake of resumes"
+* Another set of repositories to retain job descriptions in text format
+* AI-powered matching engine to contextually look up lake of resumes based on a given job description.
+* Interview component to receive the short-listed candidates contact info e.g. email addresses to deploy HR-designed interview questions to them
+* Scoring component to rank interview results
+* Formula system
+* Ranking engine to sort the results based on the overal combined score that short-listed candidates obtained
+
+![hla2](assets/hla2.png)
+
+### Examples on populating lake of resumes
+Gateway Web Api is a scalable entity that can handle an enormous number of requests in parallel. Therefore, it can import resumes very efficiently in mass and store them in their designated lake. The following example applications can integrate with this particular aspect of the API to import resumes:
+
+* A UI app to run mass upload
+* An offline job to read resumes from a database and get them imported into the lake
+* An IMAP application to receive emails with a particular subject and attached resumes
+
