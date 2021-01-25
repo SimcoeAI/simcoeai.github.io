@@ -444,3 +444,330 @@ Properties to populate are:
    }
 }
 ```
+
+## Job Description
+
+### Get Job Descriptions
+
+To get a list of job descriptions associated with a lake of resumes, use the following request:
+
+```
+export class AcquireJobDescriptionByPoolId extends BaseRequest {
+    public poolId: string;
+
+    constructor() {
+        super();
+        this.typeName = `JobDescriptionQueryByCompanyIdAndPoolIdRequest`;
+    }
+}
+```
+
+Property to populate:
+- poolId: ID of the lake that the job description is associated with
+
+**Sample Request**
+
+```
+{
+   "guid": "4c756a58-2c40-53cc-c780-4d1beeed1867", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 2034,
+   "userId": "d3cc45ec-3df6-410c-aac4-b58042f35029",
+   "typeName": "JobDescriptionQueryByCompanyIdAndPoolIdRequest",
+   "poolId": "422B19C9E3290E7B8687DADF543A644F"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"4c756a58-2c40-53cc-c780-4d1beeed1867",
+   "version":0,
+   "result":{
+      "results": {
+         "jobDescriptions": [
+            {
+               "createdDate": "January 24, 2021",
+               "title": "Information Technology",
+               "content": "Set up workstations and peripheral devices. Install and configure software. Maintain networks",
+               "poolId": "422B19C9E3290E7B8687DADF543A644F",
+               "userId": "d3cc45ec-3df6-410c-aac4-b58042f35029",
+               "keywords": null,
+               "isActive": true,
+               "partitionKey": "2034",
+               "rowKey": "49FB384DEB86245627634BF94F2622BF",
+               "timestamp": "2021-01-24T17:39:49.0586005-05:00",
+               "eTag": "W/\"datetime'2021-01-24T22%3A39%3A49.0586005Z'\""
+            },
+            {
+               "createdDate": "May 28, 2020",
+               "title": "software developer",
+               "content": "    Develop and test software to meet consumers' and clients' needs.\n    Develop upgrades for existing applications.\n    Monitor quality and performance of applications through testing and maintenance.\n    Document all work for future reference.\nmanagement of projects\ncreation of plans for future\n",
+               "poolId": "422B19C9E3290E7B8687DADF543A644F",
+               "userId": "0030270f-3c9e-4e61-ab56-560d7dc4f3bc",
+               "keywords": null,
+               "isActive": true,
+               "partitionKey": "2034",
+               "rowKey": "81459E0A8AC2CAF78AA48149C74EBABA",
+               "timestamp": "2020-05-27T21:11:26.73065-04:00",
+               "eTag": "W/\"datetime'2020-05-28T01%3A11%3A26.73065Z'\""
+            }
+         ],
+         "poolName": "IT",
+         "resumeCount": 637
+      },
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+### Create Job Description
+
+To create a new job description in a lake of resumes, use the following request:
+
+```
+export class CreateJobDescriptionRequest extends BaseRequest {
+    public model: CreateJobDescriptionModel;
+
+    constructor() {
+        super();
+        this.typeName = 'JobDescriptionSaveRequest';
+        this.model = new CreateJobDescriptionModel();
+    }
+}
+```
+
+The model property is of type CreateJobDescriptionModel which is defined as:
+
+```
+export class CreateJobDescriptionModel {
+    public title: string;
+    public content: string;
+    public poolId: string;
+}
+```
+
+Properties of the model to populate are:
+
+- title: The title of the job description
+- content: The job description details which defines job requirements
+- poolId: ID of the lake to associate this job description with 
+
+**Sample Request**
+
+```
+{
+   "guid": "71bfc8d8-55ba-41ec-9286-f8a9e38528a8", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 1234,
+   "userId": "28f26030-17ed-4fcf-a71c-e30bca7ed966",
+   "typeName": "JobDescriptionSaveRequest",
+   "model": {
+      "title": "Information Technology",
+      "content": "Set up workstations and peripheral devices. Install and configure software. Maintain networks",
+      "poolId": "422B19C9E3290E7B8687DADF543A644F"
+   }
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"71bfc8d8-55ba-41ec-9286-f8a9e38528a8",
+   "version":0,
+   "result":{
+      "results":true,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+### Update Job Description
+
+To update an existing job description associated with a lake of resumes, use the following request:
+
+```
+export class UpdateJobDescriptionRequest extends CreateJobDescriptionRequest {
+    constructor() {
+        super();
+        this.typeName = 'JobDescriptionUpdateRequest';
+    }
+}
+```
+
+The model property is of type CreateJobDescriptionModel which is defined as:
+
+```
+export class CreateJobDescriptionModel {
+    public title: string;
+    public content: string;
+    public poolId: string;
+}
+```
+
+Properties of the model to populate are:
+
+- title: The new title of the job description
+- content: The new job description details which defines job requirements
+- poolId: ID of the lake associated with this job description 
+
+**Sample Request**
+
+```
+{
+   "guid": "1b19039e-544e-4420-86c2-9210a2cbc3b7", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 1234,
+   "userId": "28f26030-17ed-4fcf-a71c-e30bca7ed966",
+   "typeName": "JobDescriptionSaveRequest",
+   "model": {
+      "title": "Information Technology",
+      "content": "Set up workstations and peripheral devices. Install and configure software. Maintain networks",
+      "poolId": "422B19C9E3290E7B8687DADF543A644F"
+   }
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"1b19039e-544e-4420-86c2-9210a2cbc3b7",
+   "version":0,
+   "result":{
+      "results":true,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+### Delete Job Description
+
+(Issue #106 will address a bug with this request - If no interview is associated with this request, it fails)
+
+To delete an existing job description associated with a lake of resumes, use the following request:
+
+```
+export class DeleteJobDescriptionRequest extends BaseRequest {
+  rowKey: string;
+  constructor() {
+    super();
+    this.typeName = 'JobDescriptionDeleteRequest';
+  }
+}
+```
+
+Property to populate:
+
+- rowKey: ID of the job description to delete
+
+**Sample Request**
+
+```
+{
+   "guid": "b2845afa-65ec-fa46-f3dc-392ced93f63b", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 1234,
+   "userId": "28f26030-17ed-4fcf-a71c-e30bca7ed966",
+   "typeName": "JobDescriptionDeleteRequest",
+   "rowKey": "E66B7B3AE1D38066C49DD82B5C9444BE"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"620bd24b-c899-edf8-07ef-a2cfaeff06d3",
+   "version":0,
+   "result":{
+      "results":null,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+## Interview
+
+### Get Interviews
+
+To get a list of interviews associated with a job description, use the following request:
+
+```
+export class GetInterviewsRequest extends BaseRequest {
+    jobDescriptionId: string;
+
+    constructor() {
+        super();
+        this.typeName = 'InterviewsQueryRequest';
+    }
+}
+```
+
+Property to populate:
+
+- jobDescriptionId: ID of the job description to return interviews for
+
+**Sample Request**
+
+```
+{
+   "guid": "da2f4ce4-5c1b-f0a4-e4d5-2ccf6fcdce6b", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 2034,
+   "userId": "d3cc45ec-3df6-410c-aac4-b58042f35029",
+   "typeName": "InterviewsQueryRequest",
+   "jobDescriptionId": "49FB384DEB86245627634BF94F2622BF"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"620bd24b-c899-edf8-07ef-a2cfaeff06d3",
+   "version":0,
+   "result":{
+      "results":null,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
