@@ -742,13 +742,13 @@ Property to populate:
 
 ```
 {
-   "guid": "da2f4ce4-5c1b-f0a4-e4d5-2ccf6fcdce6b", 
+   "guid": "e7f3fb06-72e8-4c89-800b-4e5d0462759f", 
    "version": 1,   
    "domain" : "CognitiveApp", 
    "companyId" : 2034,
    "userId": "d3cc45ec-3df6-410c-aac4-b58042f35029",
    "typeName": "InterviewsQueryRequest",
-   "jobDescriptionId": "49FB384DEB86245627634BF94F2622BF"
+   "jobDescriptionId": "C66E53EB1E56AE79F47958BFEFD7C680"
 }
 ```
 
@@ -756,10 +756,54 @@ Property to populate:
 
 ```
 {
-   "guid":"620bd24b-c899-edf8-07ef-a2cfaeff06d3",
+   "guid":"e7f3fb06-72e8-4c89-800b-4e5d0462759f",
    "version":0,
    "result":{
-      "results":null,
+      "results": {
+         "jobDescriptionId": "C66E53EB1E56AE79F47958BFEFD7C680",
+         "interviews": [
+            {
+               "id": "302ba2ed61f44888a73e152d9b6f3663",
+               "title": "Initial interview",
+               "validForHours": 24,
+               "qnas": [
+                  {
+                     "id": 1,
+                     "question": "First question",
+                     "answer": "Expected answer to first question",
+                     "weight": 40
+                  },
+                  {
+                     "id": 2,
+                     "question": "Second question",
+                     "answer": "Expected answer to the second question",
+                     "weight": 60
+                  }
+               ],
+               "published": true
+            },
+            {
+               "id": "18b8d943eea84965b89f993ffe603be5",
+               "title": "Second interview",
+               "validForHours": 48,
+               "qnas": [
+                  {
+                     "id": 1,
+                     "question": "First question of the second interview",
+                     "answer": "Expected answer to the first question of the second interview",
+                     "weight": 75
+                  },
+                  {
+                     "id": 2,
+                     "question": "Second question of the second interview",
+                     "answer": "Expected answer to the second question of the second interview",
+                     "weight": 25
+                  }
+               ],
+               "published": false
+            }
+         ]
+      },
       "code":1,
       "details":[
          
