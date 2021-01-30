@@ -968,3 +968,89 @@ The following request will add a new interview to the job description, and updat
    }
 }
 ```
+
+## Screening Queue
+
+Screening queue is a list of candidates that are being screened for a particular job description. Users send interviews (associated to the job description) to candidates in the queue. Interview results are calculate per each screened candidate in the queue.  
+
+### Get Screening Queue
+
+To get the screening queue associated with a job description, use the following request:
+
+```
+export class ScreeningQueueByJobDescriptionRequest extends BaseRequest {
+    constructor(
+        public jobDescriptionId: string
+    ) {
+        super();
+        this.typeName = "ScreeningQueueByJobDescriptionRequest";
+    }
+}
+```
+
+Property to populate:
+
+- jobDescriptionId: ID of the job description 
+
+**Sample Request**
+
+```
+{
+   "guid": "3bd9d66d-2905-38f5-6e20-05d0b38410fc", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3095,
+   "userId": "1421eac3-2db1-4862-ac31-583521590388",
+   "typeName": "ScreeningQueueByJobDescriptionRequest",
+   "jobDescriptionId": "D77CD30D3D09ECC015765F09BB7DE08E"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"1b19039e-544e-4420-86c2-9210a2cbc3b7",
+   "version":0,
+   "result":{
+      "results":true,
+      "code":1,
+      "details":[
+         {
+            "jobDescriptionId": "D77CD30D3D09ECC015765F09BB7DE08E",
+            "candidateId": "jane.doe@testing.com",
+            "email": "jane.doe@testing.com",
+            "fullName": "",
+            "phone": "",
+            "resumeUrl": "https://storage456897654.blob.core.windows.net/1453ee4e360634d11a431d48b7d3af31/0b1d4e35a81746faabee988b7d1515d1.docx",
+            "status": 0
+         },
+         {
+            "jobDescriptionId": "D77CD30D3D09ECC015765F09BB7DE08E",
+            "candidateId": "alice.smith@gmail.com",
+            "email": "alice.smith@gmail.com",
+            "fullName": "",
+            "phone": "",
+            "resumeUrl": "https://storage456897654.blob.core.windows.net/1453ee4e360634d11a431d48b7d3af31/01fde52fb97d4b36a9acdfbe207e72cf.docx",
+            "status": 0
+         }
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+Currently the "fullName" and "phone" are blank in the response. This will be enhanced in the future.
+
+The "status" comes from the following enum:
+
+```
+export enum ScreeningQueueStatuses {
+    New = 0,
+    Interview = 300,
+    Complete = 600
+}
+```
+
