@@ -473,7 +473,7 @@ Property to populate:
    "version": 1,   
    "domain" : "CognitiveApp", 
    "companyId" : 2034,
-   "userId": "d3cc45ec-3df6-410c-aac4-b58042f35029",
+   "userId": "28f26030-17ed-4fcf-a71c-e30bca7ed966",
    "typeName": "JobDescriptionQueryByCompanyIdAndPoolIdRequest",
    "poolId": "422B19C9E3290E7B8687DADF543A644F"
 }
@@ -493,7 +493,7 @@ Property to populate:
                "title": "Information Technology",
                "content": "Set up workstations and peripheral devices. Install and configure software. Maintain networks",
                "poolId": "422B19C9E3290E7B8687DADF543A644F",
-               "userId": "d3cc45ec-3df6-410c-aac4-b58042f35029",
+               "userId": "28f26030-17ed-4fcf-a71c-e30bca7ed966",
                "keywords": null,
                "isActive": true,
                "partitionKey": "2034",
@@ -746,7 +746,7 @@ Property to populate:
    "version": 1,   
    "domain" : "CognitiveApp", 
    "companyId" : 2034,
-   "userId": "d3cc45ec-3df6-410c-aac4-b58042f35029",
+   "userId": "28f26030-17ed-4fcf-a71c-e30bca7ed966",
    "typeName": "InterviewsQueryRequest",
    "jobDescriptionId": "C66E53EB1E56AE79F47958BFEFD7C680"
 }
@@ -815,3 +815,156 @@ Property to populate:
 }
 ```
 
+### Save Interview
+
+To save interviews against a job description, use the following request:
+
+```
+export class SaveInterviewsRequest extends BaseRequest {
+    public model: InterviewsSet;
+
+    constructor() {
+        super();
+        this.typeName = 'InterviewSaveRequest';
+        this.model = new InterviewsSet();
+    }
+}
+```
+
+This is a create and update request. If 
+
+Property to populate:
+
+- model: an object of type InterviewsSet. See following section.
+
+**InterviewsSet Objects**
+
+```
+export class InterviewsSet {
+    public jobDescriptionId: string;
+    public interviews: Interview[];
+}
+```
+
+```
+export class Interview {
+    public id: string;
+    public title: string;
+    public validForHours: number;
+    public qnas: QnA[];
+    public published: boolean;
+}
+```
+
+```
+export class QnA {
+    public id: number;
+    public question: string;
+    public answer: string;
+    public weight: number;
+}
+```
+
+**Sample Request**
+
+The following request creates a brand new interview set for a job description (notice the empty id field of the single interview in the request). If any interviews existed before, they will be removed.
+
+```
+{
+   "guid": "db7939e6-8937-a26a-8915-bb7b2103572a", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3095,
+   "userId": "1421eac3-2db1-4862-ac31-583521590388",
+   "typeName": "InterviewSaveRequest",
+   "model": {
+      "jobDescriptionId": "C66E53EB1E56AE79F47958BFEFD7C680",
+      "interviews": [
+         {
+            "id": "",
+            "title": "the title",
+            "validForHours": 12,
+            "published": false,
+            "qnas": [
+               {
+                  "id": "1",
+                  "question": "some question",
+                  "answer": "some answer",
+                  "weight": 100
+               }
+            ]
+         }
+      ]
+   }
+}
+```
+
+The following request will add a new interview to the job description, and updates the interview added by the above request. Notice the now populate id field of the interview titled "Updated title".
+
+```
+{
+   "guid": "db7939e6-8937-a26a-8915-bb7b2103572a", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3095,
+   "userId": "1421eac3-2db1-4862-ac31-583521590388",
+   "typeName": "InterviewSaveRequest",
+   "model": {
+      "jobDescriptionId": "C66E53EB1E56AE79F47958BFEFD7C680",
+      "interviews": [
+         {
+            "id": "37da583e077b4be58142061e9300aa20",
+            "title": "Updated title",
+            "validForHours": 12,
+            "published": false,
+            "qnas": [
+               {
+                  "id": "1",
+                  "question": "Updated question",
+                  "answer": "Updated answer",
+                  "weight": 70
+               },
+               {
+                  "id": "2",
+                  "question": "New question",
+                  "answer": "New answer",
+                  "weight": 30
+               }
+            ]
+         } , {
+            "id": "",
+            "title": "Second interview",
+            "validForHours": 12,
+            "published": false,
+            "qnas": [
+               {
+                  "id": "1",
+                  "question": "First question",
+                  "answer": "First answer",
+                  "weight": 100
+               }
+            ]
+         }
+      ]
+   }
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"620bd24b-c899-edf8-07ef-a2cfaeff06d3",
+   "version":0,
+   "result":{
+      "results":true,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
