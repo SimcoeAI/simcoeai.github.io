@@ -30,7 +30,7 @@ The architecture of the application allows the integrated client applications su
 
 The following diagram depicts this mechanism:
 
-![hla1](assets/hla1.png)
+![simcoe ai data flow diagram](assets/hla1.png)
 
 ### Major components of the system
 TThe system compromises the following major components:
@@ -43,7 +43,7 @@ TThe system compromises the following major components:
 * Formula system
 * Ranking engine to sort the results based on the overal combined score that short-listed candidates obtained
 
-![hla2](assets/hla2.png)
+![simcoe ai major components](assets/hla2.png)
 
 ### Examples on populating lake of resumes
 Gateway Web Api is a scalable entity that can handle an enormous number of requests in parallel. Therefore, it can import resumes very efficiently in mass and store them in their designated lake of resumes. The following examples illustrate some integration forms with Simcoe AI's web api:
