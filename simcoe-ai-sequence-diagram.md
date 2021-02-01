@@ -2,8 +2,12 @@
 
 The following diagram depicts the sequence of application starting from the client app e.g. UI client app, ATS, etc. to the last tier. The Gateway Web Api, as it appears, facilitates collecting requests and passes them to the backend's AI engine. 
 
-## Gatewat's security feature
+![simcoe ai sequence diagram](assets/sequence.png)
+
+## A note on Gateway security
 
 One of the key elements of Gateway Api is that it provides Azure AD B2C a couple of claims for further security enhancements.
 
-![simcoe ai sequence diagram](assets/sequence.png)
+## Security UX
+
+The UX aspect of integration with [Azure AD B2C](https://azure.microsoft.com/en-us/services/active-directory/external-identities/b2c/) is managed by Simceo AI Inc. and the client app developers do not need to create or use an existing instance of Azure AD B2C.
