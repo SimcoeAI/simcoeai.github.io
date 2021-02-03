@@ -1331,3 +1331,16 @@ export enum CandidateInterviewStatus {
 
 The totalScore field is calculated based on the weight of each interview question and the given answer, and is between 0 and 100. The higher the score the closer the candidate's answer to question's expected answer.
 
+### TODO: how to work with Interview endpoint
+
+## Master Formula Management
+
+### TODO: MasterFormulaQueryByCompanyIdRequest
+
+### TODO: MasterFormulaSaveRequest
+
+## Resume Upload and Processing
+
+### TODO: SasTokenRequest
+
+### TODO: ProcessResumeBlobRequest
