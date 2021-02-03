@@ -48,6 +48,8 @@ The following properties are to be populated before submitting to the gateway, f
 - companyId: company ID available in the JWT token claims
 - userId: user ID available in the JWT token claims
 
+[Back to top](#)
+
 ## User Management
 
 ### List of Users
