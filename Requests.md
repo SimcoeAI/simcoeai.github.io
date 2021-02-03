@@ -110,6 +110,8 @@ Sample response:
 }
 ```
 
+[Back to top](#)
+
 ### Invite a User
 
 To invite a user to join your Simcoe AI company, use the following request:
@@ -167,6 +169,8 @@ A successful response looks like the following with a code of 1:
 }
 ```
 
+[Back to top](#)
+
 ### Remove a User
 
 To remove a user from your Simcoe AI company, use the following request:  
@@ -221,6 +225,8 @@ A code 1 (Success) in response indicates success:
 ```
 
 ## Lake Management
+
+[Back to top](#)
 
 ### List Lakes
 
@@ -298,6 +304,8 @@ The property to populate is:
 }
 ```
 
+[Back to top](#)
+
 ### Create Lake
 
 To create a lake of resumes, use the following request:
@@ -354,6 +362,8 @@ The "results" field returns the ID of the pool.
 }
 ```
 
+[Back to top](#)
+
 ### Delete Lake
 
 To delete a lake of resumes, use the following request:
@@ -407,6 +417,8 @@ The following property should be populated:
    }
 }
 ```
+
+[Back to top](#)
 
 ### Rename Lake
 
@@ -462,6 +474,8 @@ Properties to populate are:
    }
 }
 ```
+
+[Back to top](#)
 
 ## Job Description Management
 
@@ -547,6 +561,8 @@ Property to populate:
 }
 ```
 
+[Back to top](#)
+
 ### Create Job Description
 
 To create a new job description in a lake of resumes, use the following request:
@@ -616,6 +632,8 @@ Properties of the model to populate are:
 }
 ```
 
+[Back to top](#)
+
 ### Update Job Description
 
 To update an existing job description associated with a lake of resumes, use the following request:
@@ -682,6 +700,8 @@ Properties of the model to populate are:
 }
 ```
 
+[Back to top](#)
+
 ### Delete Job Description
 
 (Issue #106 will address a bug with this request - If no interview is associated with this request, it fails)
@@ -734,6 +754,8 @@ Property to populate:
    }
 }
 ```
+
+[Back to top](#)
 
 ## Interview Management
 
@@ -832,6 +854,8 @@ Property to populate:
    }
 }
 ```
+
+[Back to top](#)
 
 ### Save Interview
 
@@ -987,6 +1011,8 @@ The following request will add a new interview to the job description, and updat
 }
 ```
 
+[Back to top](#)
+
 ## Screening Queue Management
 
 Screening queue is a list of candidates that are being screened for a particular job description. Users send interviews (associated to the job description) to candidates in the queue. Interview results are calculate per each screened candidate in the queue.  
@@ -1072,6 +1098,8 @@ export enum ScreeningQueueStatuses {
 }
 ```
 
+[Back to top](#)
+
 ### Add Candidate to Screening Queue
 
 To add a candidate to a job description's screening queue, use the following request:
@@ -1127,6 +1155,8 @@ Properties to populate:
 }
 ```
 
+[Back to top](#)
+
 ### Remove Candidate from Screening Queue
 
 To remove a candidate from a job description's screening queue, use the following request:
@@ -1181,6 +1211,8 @@ Properties to populate:
    }
 }
 ```
+
+[Back to top](#)
 
 ## Interviewing Candidates
 
@@ -1243,6 +1275,8 @@ The interview invitation will contain a link with a token that will redirect the
    }
 }
 ```
+
+[Back to top](#)
 
 ### Get Candidate Interviews
 
@@ -1333,16 +1367,28 @@ export enum CandidateInterviewStatus {
 
 The totalScore field is calculated based on the weight of each interview question and the given answer, and is between 0 and 100. The higher the score the closer the candidate's answer to question's expected answer.
 
+[Back to top](#)
+
 ### TODO: how to work with Interview endpoint
+
+[Back to top](#)
 
 ## Master Formula Management
 
 ### TODO: MasterFormulaQueryByCompanyIdRequest
 
+[Back to top](#)
+
 ### TODO: MasterFormulaSaveRequest
+
+[Back to top](#)
 
 ## Resume Upload and Processing
 
 ### TODO: SasTokenRequest
 
+[Back to top](#)
+
 ### TODO: ProcessResumeBlobRequest
+
+[Back to top](#)
