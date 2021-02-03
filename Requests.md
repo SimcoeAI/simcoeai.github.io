@@ -14,6 +14,8 @@
 
 [Screening Queue Management](#screening-queue-management)
 
+[Interviewing Candidates](#interviewing-candidates)
+
 ## Base Request
 
 All requests inherit from the **BaseRequest** type:
@@ -1070,7 +1072,7 @@ export enum ScreeningQueueStatuses {
 
 ### Add Candidate to Screening Queue
 
-To add a candidate to a screening queue, use the following request:
+To add a candidate to a job description's screening queue, use the following request:
 
 ```
 export class AddCandidateToScreeningQueueRequest extends BaseRequest {
@@ -1122,4 +1124,210 @@ Properties to populate:
    }
 }
 ```
+
+### Remove Candidate from Screening Queue
+
+To remove a candidate from a job description's screening queue, use the following request:
+
+```
+export class RemoveCandidateFromScreeningQueueRequest extends BaseRequest {
+    constructor(
+        public jobDescriptionId: string,
+        public candidateId: string
+    ) {
+        super();
+        this.typeName = "RemoveCandidateFromScreeningQueueRequest";
+    }
+}
+```
+
+Properties to populate:
+
+- jobDescriptionId: ID of the job description
+- candidateId: Id of the candidate
+
+**Sample Request**
+
+```
+{
+   "guid": "620bd24b-c899-edf8-07ef-a2cfaeff06d3", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3095,
+   "userId": "1421eac3-2db1-4862-ac31-583521590388",
+   "typeName": "RemoveCandidateFromScreeningQueueRequest",
+   "jobDescriptionId": "D77CD30D3D09ECC015765F09BB7DE08E",
+   "candidateId": "jane.doe@somecompany.com"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"620bd24b-c899-edf8-07ef-a2cfaeff06d3",
+   "version":0,
+   "result":{
+      "results":true,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+## Interviewing Candidates
+
+### Interview Invitation
+
+To send an invitation email to a candidate in a screening queue to take an online interview, use the following request:
+
+```
+export class InterviewInvitationRequest extends BaseRequest {
+    constructor(
+        public jobDescriptionId: string,
+        public interviewId: string,
+        public candidateId: string
+    ) {
+        super();
+        this.typeName = "InterviewInvitationRequest";
+    }
+}
+```
+
+Properties to populate:
+
+- jobDescriptionId: ID of the job description
+- interviewId: ID of the interview to invite to
+- candidateId: ID of the candidate
+
+The interview invitation will contain a link with a token that will redirect the user to the interview page.
+
+**Sample Request**
+
+```
+{
+   "guid": "f7b9b4c8-e163-9fce-d1a9-266b46562150", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3095,
+   "userId": "1421eac3-2db1-4862-ac31-583521590388",
+   "typeName": "InterviewInvitationRequest",
+   "jobDescriptionId": "62DEE413209A0977168F2B6E2979CDB1",
+   "interviewId": "8907baa0255f439184cfd8bd57d9d57b",
+   "candidateId": "jane.doe@somecompany.com"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"f7b9b4c8-e163-9fce-d1a9-266b46562150",
+   "version":0,
+   "result":{
+      "results":true,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+### Get Candidate Interviews
+
+To get a list of a candidate's interview results, use the following request:
+
+```
+export class CandidateInterviewsRequest extends BaseRequest {
+    constructor(
+        public jobDescriptionId: string,
+        public candidateId: string
+    ) {
+        super();
+        this.typeName = "CandidateInterviewsRequest";
+    }
+}
+```
+
+Properties to populate:
+
+- jobDescriptionId: ID of the job description
+- candidateId: ID of the candidate
+
+**Sample Request**
+
+```
+{
+   "guid": "fc75f378-8696-17b0-e27d-5174719db988", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3095,
+   "userId": "1421eac3-2db1-4862-ac31-583521590388",
+   "typeName": "CandidateInterviewsRequest",
+   "jobDescriptionId": "62DEE413209A0977168F2B6E2979CDB1",
+   "candidateId": "jane.doe@somecompany.com"
+}
+```
+
+**Sample Response**
+
+In this sample, there are two interview associated with the job description in the request:
+
+```
+{
+   "guid":"fc75f378-8696-17b0-e27d-5174719db988",
+   "version":0,
+   "result":{
+      "results": [
+         {
+            "candidateId": "jane.doe@somecompany.com",
+            "jobDescriptionId": "62DEE413209A0977168F2B6E2979CDB1",
+            "interviewId": "8907baa0255f439184cfd8bd57d9d57b",
+            "status": 500,
+            "answers": [
+               {"questionId":1,"answer":"some answer to question 1"},
+               {"questionId":2,"answer":"some answer to question 2"}
+            ],
+            "totalScore": 47.595058602760986
+         }, {
+            "candidateId": "jane.doe@somecompany.com",
+            "jobDescriptionId": "62DEE413209A0977168F2B6E2979CDB1",
+            "interviewId": "8907baa0255f439184cfd8bd57d9d57b",
+            "status": 0,
+            "answers": [],
+            "totalScore": 0
+         }
+      ]
+      ,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+The status field is of following enum type:
+
+```
+export enum CandidateInterviewStatus {
+    NotSent = -1,
+    Pending = 0,
+    Complete = 500
+}
+```
+
+The totalScore field is calculated based on the weight of each interview question and the given answer, and is between 0 and 100. The higher the score the closer the candidate's answer to question's expected answer.
 
