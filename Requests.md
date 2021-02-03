@@ -1,6 +1,20 @@
 # Typescript Library of Gateway Requests
 
-## BaseRequest
+## Table of Contents
+
+[Base Request](#base-request)
+
+[User Management](#user-management)
+
+[Lake Management](#lake-management)
+
+[Job Description Management](#job-desc-management)
+
+[Interview Management](#interview-management)
+
+[Screening Queue Management](#screening-queue-management)
+
+## Base Request {#base-request}
 
 All requests inherit from the **BaseRequest** type:
 
@@ -32,7 +46,7 @@ The following properties are to be populated before submitting to the gateway, f
 - companyId: company ID available in the JWT token claims
 - userId: user ID available in the JWT token claims
 
-## User Management
+## User Management {#user-management}
 
 ### List of Users
 
@@ -202,7 +216,7 @@ A code 1 (Success) in response indicates success:
 }
 ```
 
-## Lake Management
+## Lake Management {#lake-management}
 
 ### List Lakes
 
@@ -445,7 +459,7 @@ Properties to populate are:
 }
 ```
 
-## Job Description
+## Job Description Management {#job-desc-management}
 
 ### Get Job Descriptions
 
@@ -717,7 +731,7 @@ Property to populate:
 }
 ```
 
-## Interview
+## Interview Management {#interview-management}
 
 ### Get Interviews
 
@@ -969,7 +983,7 @@ The following request will add a new interview to the job description, and updat
 }
 ```
 
-## Screening Queue
+## Screening Queue Management {#screening-queue-management}
 
 Screening queue is a list of candidates that are being screened for a particular job description. Users send interviews (associated to the job description) to candidates in the queue. Interview results are calculate per each screened candidate in the queue.  
 
