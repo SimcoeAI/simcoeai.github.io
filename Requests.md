@@ -8,13 +8,13 @@
 
 [Lake Management](#lake-management)
 
-[Job Description Management](#job-desc-management)
+[Job Description Management](#job-description-management)
 
 [Interview Management](#interview-management)
 
 [Screening Queue Management](#screening-queue-management)
 
-## Base Request {#base-request}
+## Base Request
 
 All requests inherit from the **BaseRequest** type:
 
@@ -46,7 +46,7 @@ The following properties are to be populated before submitting to the gateway, f
 - companyId: company ID available in the JWT token claims
 - userId: user ID available in the JWT token claims
 
-## User Management {#user-management}
+## User Management
 
 ### List of Users
 
@@ -216,7 +216,7 @@ A code 1 (Success) in response indicates success:
 }
 ```
 
-## Lake Management {#lake-management}
+## Lake Management
 
 ### List Lakes
 
@@ -459,7 +459,7 @@ Properties to populate are:
 }
 ```
 
-## Job Description Management {#job-desc-management}
+## Job Description Management
 
 ### Get Job Descriptions
 
@@ -731,7 +731,7 @@ Property to populate:
 }
 ```
 
-## Interview Management {#interview-management}
+## Interview Management
 
 ### Get Interviews
 
@@ -983,7 +983,7 @@ The following request will add a new interview to the job description, and updat
 }
 ```
 
-## Screening Queue Management {#screening-queue-management}
+## Screening Queue Management
 
 Screening queue is a list of candidates that are being screened for a particular job description. Users send interviews (associated to the job description) to candidates in the queue. Interview results are calculate per each screened candidate in the queue.  
 
@@ -1065,6 +1065,61 @@ export enum ScreeningQueueStatuses {
     New = 0,
     Interview = 300,
     Complete = 600
+}
+```
+
+### Add Candidate to Screening Queue
+
+To add a candidate to a screening queue, use the following request:
+
+```
+export class AddCandidateToScreeningQueueRequest extends BaseRequest {
+    constructor(
+        public jobDescriptionId: string,
+        public candidateId: string
+    ) {
+        super();
+        this.typeName = "AddCandidateToScreeningQueueRequest";
+    }
+}
+```
+
+Properties to populate:
+
+- jobDescriptionId: ID of the job description
+- candidateId: Id of the candidate
+
+**Sample Request**
+
+```
+{
+   "guid": "98df1354-8dc7-e805-c9e1-3135da3ece9d", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3095,
+   "userId": "1421eac3-2db1-4862-ac31-583521590388",
+   "typeName": "AddCandidateToScreeningQueueRequest",
+   "jobDescriptionId": "D77CD30D3D09ECC015765F09BB7DE08E",
+   "candidateId": "jane.doe@somecompany.com"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"620bd24b-c899-edf8-07ef-a2cfaeff06d3",
+   "version":0,
+   "result":{
+      "results":true,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
 }
 ```
 
