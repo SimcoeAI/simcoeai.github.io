@@ -8,7 +8,7 @@
 
 [Lake Management](#lake-management)
 
-[Resume Upload and Processing](#resume-upload-and-processing)
+[Resume Upload and Ingestion](#resume-upload-and-Ingestion)
 
 [Job Description Management](#job-description-management)
 
@@ -481,9 +481,9 @@ Properties to populate are:
 
 [Back to top](#)
 
-## Resume Upload and Processing
+## Resume Upload and Ingestion
 
-Uploading resumes is a 3 step process:<a name="upload-resume-steps"></a>
+Uploading and ingesting resumes is a 3 step process:<a name="upload-resume-steps"></a>
 
 1. Obtain a SAS (Shared Access Signature) token to upload the resume in company's provided blob container using the SasTokenRequest request. The container stores the resume temporarily for the Simcoe AI backend to process.
 
@@ -553,7 +553,7 @@ The following fields from the request will be used by your code to construct the
 
 ### ProcessResumeBlobRequest
 
-To ingest a resume blob (see [steps](#resume-upload-and-Processing)), use the following request:
+To ingest a resume blob (see [steps](#resume-upload-and-ingestion)), use the following request:
 
 ```
 export class ProcessResumeBlobRequest extends BaseRequest {
