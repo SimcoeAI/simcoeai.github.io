@@ -8,6 +8,8 @@
 
 [Lake Management](#lake-management)
 
+[Resume Upload and Processing](#resume-upload-and-processing)
+
 [Job Description Management](#job-description-management)
 
 [Interview Management](#interview-management)
@@ -17,8 +19,6 @@
 [Interviewing Candidates](#interviewing-candidates)
 
 [Interview Workflow](#interview-workflow)
-
-[Resume Upload and Processing](#resume-upload-and-processing)
 
 ## Base Request
 
@@ -465,6 +465,133 @@ Properties to populate are:
 ```
 {
    "guid":"cec320a9-62e2-6f7e-66c7-b72a92e6a5ea",
+   "version":0,
+   "result":{
+      "results":true,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+[Back to top](#)
+
+## Resume Upload and Processing
+
+Uploading resumes is a 3 step process:<a name="upload-resume-steps"></a>
+
+1. Obtain a SAS (Shared Access Signature) token to upload the resume in company's provided blob container using the SasTokenRequest request. The container stores the resume temporarily for the Simcoe AI backend to process.
+
+2. Post the resume to the blob container. Contact Simcoe AI to get your company's blob container URL.
+
+3. Send a request (ProcessResumeBlobRequest) to gateway for ingesting the resume by Simcoe AI's backend.
+
+[Back to top](#)
+
+### SasTokenRequest
+
+To get a SAS token for uploading resumes to Simcoe AI's temporary blob storage specific to your company, use the following request:
+
+```
+export class SasTokenRequest extends BaseRequest {
+    constructor() {
+        super();
+        this.typeName = "SasTokenRequest";
+    }
+}
+```
+
+**Sample Request**
+
+```
+{
+   "guid": "add754f4-40ff-68fc-6f57-dae8ae595b5e", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3516,
+   "userId": "1f6dee4b-64b7-49a3-a564-9bd97adf7c04",
+   "typeName": "SasTokenRequest"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"f7b9b4c8-e163-9fce-d1a9-266b46562150",
+   "version":0,
+   "result":{
+      "results":{
+         "token": "?sv=2018-03-28&sr=c&sig=CTC6bXT1HgSHmoYh2nfFz6OSaQ138duDOHK3mB0uOlo%3D&st=2021-02-04T01%3A58%3A09Z&se=2021-02-05T01%3A58%3A09Z&sp=w",
+         "accountName": "theAccountName",
+         "containerName": "tmp784",
+         "maxFileSizeInBytes": 1000000
+      },
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+The following fields from the request will be used by your code to construct the post request for uploading the resume:
+
+- accountName: Name of the storage account to upload to.
+- containerName: Name of the container in the storage account.
+- maxFileSizeInBytes: Maximum resume file size in bytes.
+
+[Back to top](#)
+
+### ProcessResumeBlobRequest
+
+To ingest a resume blob (see [steps](#resume-upload-and-Processing)), use the following request:
+
+```
+export class ProcessResumeBlobRequest extends BaseRequest {
+    constructor(
+        public lakeId: string,
+        public blobName: string
+    ) {
+        super();
+        this.typeName = "ProcessResumeBlobRequest";
+    }
+}
+```
+
+Properties to populate:
+
+- lakeId: ID of the lake to add the resume to.
+- blobName: Name of the resume blob to ingest.
+
+**Sample Request**
+
+```
+{
+   "guid": "bafefc30-be56-8ce9-9db0-cdc5fccc1278", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3516,
+   "userId": "1f6dee4b-64b7-49a3-a564-9bd97adf7c04",
+   "typeName": "ProcessResumeBlobRequest",
+   "lakeId": "95858A9CFFEBC01D7B71B9CAAC218EEF", 
+   "blobName": "0d62d52192e44f6c89f0e2f26be35260.docx"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"f7b9b4c8-e163-9fce-d1a9-266b46562150",
    "version":0,
    "result":{
       "results":true,
@@ -1417,129 +1544,3 @@ Upon a successful POST, the Simcoe AI interview endpoint will respond with a 200
 
 [Back to top](#)
 
-## Resume Upload and Processing
-
-Uploading resumes is a 3 step process:<a name="upload-resume-steps"></a>
-
-1. Obtain a SAS (Shared Access Signature) token to upload the resume in company's provided blob container using the SasTokenRequest request. The container stores the resume temporarily for the Simcoe AI backend to process.
-
-2. Post the resume to the blob container. Contact Simcoe AI to get your company's blob container URL.
-
-3. Send a request (ProcessResumeBlobRequest) to gateway for ingesting the resume by Simcoe AI's backend.
-
-[Back to top](#)
-
-### SasTokenRequest
-
-To get a SAS token for uploading resumes to Simcoe AI's temporary blob storage specific to your company, use the following request:
-
-```
-export class SasTokenRequest extends BaseRequest {
-    constructor() {
-        super();
-        this.typeName = "SasTokenRequest";
-    }
-}
-```
-
-**Sample Request**
-
-```
-{
-   "guid": "add754f4-40ff-68fc-6f57-dae8ae595b5e", 
-   "version": 1,   
-   "domain" : "CognitiveApp", 
-   "companyId" : 3516,
-   "userId": "1f6dee4b-64b7-49a3-a564-9bd97adf7c04",
-   "typeName": "SasTokenRequest"
-}
-```
-
-**Sample Response**
-
-```
-{
-   "guid":"f7b9b4c8-e163-9fce-d1a9-266b46562150",
-   "version":0,
-   "result":{
-      "results":{
-         "token": "?sv=2018-03-28&sr=c&sig=CTC6bXT1HgSHmoYh2nfFz6OSaQ138duDOHK3mB0uOlo%3D&st=2021-02-04T01%3A58%3A09Z&se=2021-02-05T01%3A58%3A09Z&sp=w",
-         "accountName": "theAccountName",
-         "containerName": "tmp784",
-         "maxFileSizeInBytes": 1000000
-      },
-      "code":1,
-      "details":[
-         
-      ],
-      "technicalDetails":[
-         
-      ]
-   }
-}
-```
-
-The following fields from the request will be used by your code to construct the post request for uploading the resume:
-
-- accountName: Name of the storage account to upload to.
-- containerName: Name of the container in the storage account.
-- maxFileSizeInBytes: Maximum resume file size in bytes.
-
-[Back to top](#)
-
-### TODO: ProcessResumeBlobRequest
-
-To ingest a resume blob (see [steps](#resume-upload-and-Processing)), use the following request:
-
-```
-export class ProcessResumeBlobRequest extends BaseRequest {
-    constructor(
-        public lakeId: string,
-        public blobName: string
-    ) {
-        super();
-        this.typeName = "ProcessResumeBlobRequest";
-    }
-}
-```
-
-Properties to populate:
-
-- lakeId: ID of the lake to add the resume to.
-- blobName: Name of the resume blob to ingest.
-
-**Sample Request**
-
-```
-{
-   "guid": "bafefc30-be56-8ce9-9db0-cdc5fccc1278", 
-   "version": 1,   
-   "domain" : "CognitiveApp", 
-   "companyId" : 3516,
-   "userId": "1f6dee4b-64b7-49a3-a564-9bd97adf7c04",
-   "typeName": "ProcessResumeBlobRequest",
-   "lakeId": "95858A9CFFEBC01D7B71B9CAAC218EEF", 
-   "blobName": "0d62d52192e44f6c89f0e2f26be35260.docx"
-}
-```
-
-**Sample Response**
-
-```
-{
-   "guid":"f7b9b4c8-e163-9fce-d1a9-266b46562150",
-   "version":0,
-   "result":{
-      "results":true,
-      "code":1,
-      "details":[
-         
-      ],
-      "technicalDetails":[
-         
-      ]
-   }
-}
-```
-
-[Back to top](#)
