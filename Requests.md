@@ -16,6 +16,10 @@
 
 [Interviewing Candidates](#interviewing-candidates)
 
+[Interview Workflow](#interview-workflow)
+
+[Resume Upload and Processing](#resume-upload-and-processing)
+
 ## Base Request
 
 All requests inherit from the **BaseRequest** type:
@@ -1216,6 +1220,8 @@ Properties to populate:
 
 ## Interviewing Candidates
 
+See [Interview Workflow](#interview-workflow) learn about the candidate interview workflow.
+
 ### Interview Invitation
 
 To send an invitation email to a candidate in a screening queue to take an online interview, use the following request:
@@ -1369,26 +1375,171 @@ The totalScore field is calculated based on the weight of each interview questio
 
 [Back to top](#)
 
-### TODO: how to work with Interview endpoint
+## Interview Workflow
 
-[Back to top](#)
+To interview a candidate, you will first send an invitation to the candidate using the InterviewInvitationRequest request. The invitation is an email containing a URL (provided by you) that will redirect the user to your interview page. 
 
-## Master Formula Management
+A token exists in the URL's query string which you need to send to the interview REST endpoint:
 
-### TODO: MasterFormulaQueryByCompanyIdRequest
+```
+GET https://{Simcoe AI Interview Endpoint URL}/Interviews?token={token} HTTP/1.1
+```
 
-[Back to top](#)
+If the token is valid (registered in system, not expired, the interview is pending), a 200 response with interview's model in body will be sent back to you. The object graph of the interview model is:
 
-### TODO: MasterFormulaSaveRequest
+```
+export class TrimmedInterview {
+    public id: string;
+    public title: string;
+    public qnAs: TrimmedQnA[];
+}
+
+export class TrimmedQnA {
+    public id: number;
+    public question: string;
+    public answer: string;
+}
+```
+
+The field answer in TrimmedQnA is blanked out by the backend. Your page will display the interview title, and questions, and collects candidate answers. Once complete, you will submit a POST request to the interview endpoint with an array of answers in the body of the request. The token must be include in the query string:
+
+```
+POST https://{Simcoe AI Interview Endpoint URL}/Interviews?token={token} HTTP/1.1
+Content-Type: application/json;
+[
+   {"questionId": 1, "answer": "Candidate's answer to question 1"},
+   {"questionId": 2, "answer": "Candidate's answer to question 2"},
+   {"questionId": 3, "answer": "Candidate's answer to question 3"}
+]
+```
+
+Upon a successful POST, the Simcoe AI interview endpoint will respond with a 200 HTTP code. 
 
 [Back to top](#)
 
 ## Resume Upload and Processing
 
-### TODO: SasTokenRequest
+Uploading resumes is a 3 step process:<a name="upload-resume-steps"></a>
+
+1. Obtain a SAS (Shared Access Signature) token to upload the resume in company's provided blob container using the SasTokenRequest request. The container stores the resume temporarily for the Simcoe AI backend to process.
+
+2. Post the resume to the blob container. Contact Simcoe AI to get your company's blob container URL.
+
+3. Send a request (ProcessResumeBlobRequest) to gateway for ingesting the resume by Simcoe AI's backend.
+
+[Back to top](#)
+
+### SasTokenRequest
+
+To get a SAS token for uploading resumes to Simcoe AI's temporary blob storage specific to your company, use the following request:
+
+```
+export class SasTokenRequest extends BaseRequest {
+    constructor() {
+        super();
+        this.typeName = "SasTokenRequest";
+    }
+}
+```
+
+**Sample Request**
+
+```
+{
+   "guid": "add754f4-40ff-68fc-6f57-dae8ae595b5e", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3516,
+   "userId": "1f6dee4b-64b7-49a3-a564-9bd97adf7c04",
+   "typeName": "SasTokenRequest"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"f7b9b4c8-e163-9fce-d1a9-266b46562150",
+   "version":0,
+   "result":{
+      "results":{
+         "token": "?sv=2018-03-28&sr=c&sig=CTC6bXT1HgSHmoYh2nfFz6OSaQ138duDOHK3mB0uOlo%3D&st=2021-02-04T01%3A58%3A09Z&se=2021-02-05T01%3A58%3A09Z&sp=w",
+         "accountName": "theAccountName",
+         "containerName": "tmp784",
+         "maxFileSizeInBytes": 1000000
+      },
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
+
+The following fields from the request will be used by your code to construct the post request for uploading the resume:
+
+- accountName: Name of the storage account to upload to.
+- containerName: Name of the container in the storage account.
+- maxFileSizeInBytes: Maximum resume file size in bytes.
 
 [Back to top](#)
 
 ### TODO: ProcessResumeBlobRequest
+
+To ingest a resume blob (see [steps](#resume-upload-and-Processing)), use the following request:
+
+```
+export class ProcessResumeBlobRequest extends BaseRequest {
+    constructor(
+        public lakeId: string,
+        public blobName: string
+    ) {
+        super();
+        this.typeName = "ProcessResumeBlobRequest";
+    }
+}
+```
+
+Properties to populate:
+
+- lakeId: ID of the lake to add the resume to.
+- blobName: Name of the resume blob to ingest.
+
+**Sample Request**
+
+```
+{
+   "guid": "bafefc30-be56-8ce9-9db0-cdc5fccc1278", 
+   "version": 1,   
+   "domain" : "CognitiveApp", 
+   "companyId" : 3516,
+   "userId": "1f6dee4b-64b7-49a3-a564-9bd97adf7c04",
+   "typeName": "ProcessResumeBlobRequest",
+   "lakeId": "95858A9CFFEBC01D7B71B9CAAC218EEF", 
+   "blobName": "0d62d52192e44f6c89f0e2f26be35260.docx"
+}
+```
+
+**Sample Response**
+
+```
+{
+   "guid":"f7b9b4c8-e163-9fce-d1a9-266b46562150",
+   "version":0,
+   "result":{
+      "results":true,
+      "code":1,
+      "details":[
+         
+      ],
+      "technicalDetails":[
+         
+      ]
+   }
+}
+```
 
 [Back to top](#)
