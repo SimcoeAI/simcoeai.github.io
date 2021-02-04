@@ -1220,7 +1220,7 @@ Properties to populate:
 
 ## Interviewing Candidates
 
-See [Interview Workflow](#interview-workflow) learn about the candidate interview workflow.
+See [here](#interview-workflow) to learn about the candidate interview workflow.
 
 ### Interview Invitation
 
