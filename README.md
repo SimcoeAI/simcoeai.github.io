@@ -40,3 +40,6 @@ The high level picture of the application's workflow is [explained here](app-wor
 A thorough document of Typescript code, submitted payloads and received responses via signalR is [found here](Requests.md). 
 
 Please ensure that you have reviewed the [application's workflow](app-workflow-overview.md) prior to going through Simcoe AI's API documentation.
+
+### Copyright notes
+2021 - (C) Simcoe AI Inc. All rights reserved. https://simcoe.ai

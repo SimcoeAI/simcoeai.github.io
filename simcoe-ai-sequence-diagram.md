@@ -21,3 +21,6 @@ An overview of Simcoe AI's application workflow can be found [here](app-workflow
 A thorough document of Typescript code, submitted payloads and received responses via signalR is [found here](Requests.md). 
 
 [Home](README.md) 
+
+### Copyright notes
+2021 - (C) Simcoe AI Inc. All rights reserved. https://simcoe.ai
