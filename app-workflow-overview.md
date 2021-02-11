@@ -54,3 +54,9 @@ Gateway Web Api is a scalable entity that can handle an enormous number of reque
 * A company's ATS
 * A Microsoft OneDrive folder, Google drive, dropbox, etc.
 
+## Simcoe AI API documentation
+
+A thorough document of Typescript code, submitted payloads and received responses via signalR is [found here](Requests.md).
+
+[Home](README.md) 
+

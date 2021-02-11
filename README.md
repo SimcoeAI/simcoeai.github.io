@@ -34,3 +34,7 @@ We have implemented a cloud-based application with a state-of-art architecture r
 ## Application workflow
 
 The high level picture of the application's workflow is [explained here](app-workflow-overview.md).
+
+## Simcoe AI API documentation
+
+A thorough document of Typescript code, submitted payloads and received responses via signalR is [found here](Requests.md). Please ensure that you have reviewed the [application's workflow](app-workflow-overview.md) prior to going through Simcoe AI's API documentation.
