@@ -22,6 +22,5 @@ A thorough document of Typescript code, submitted payloads and received response
 
 [Home](README.md) 
 
-#
 
 Copyright 2021 &copy; [Simcoe AI Inc.](https://simcoe.ai) All rights reserved.
