@@ -1546,4 +1546,6 @@ Upon a successful POST, the Simcoe AI interview endpoint will respond with a 200
 
 [Home](README.md) 
 
+- - -
+
 Copyright 2021 &copy; [Simcoe AI Inc.](https://simcoe.ai) All rights reserved.
