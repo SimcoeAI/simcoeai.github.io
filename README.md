@@ -41,5 +41,6 @@ A thorough document of Typescript code, submitted payloads and received response
 
 Please ensure that you have reviewed the [application's workflow](app-workflow-overview.md) prior to going through Simcoe AI's API documentation.
 
-### Copyright notes
-2021 - (C) Simcoe AI Inc. All rights reserved. https://simcoe.ai
+#
+
+Copyright 2021 &copy; [Simcoe AI Inc.](https://simcoe.ai) All rights reserved.
