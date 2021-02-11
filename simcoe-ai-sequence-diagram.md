@@ -12,6 +12,10 @@ One of the key elements of Gateway Api is that it provides Azure AD B2C a couple
 
 The UX aspect of integration with [Azure AD B2C](https://azure.microsoft.com/en-us/services/active-directory/external-identities/b2c/) is managed by Simceo AI Inc. and the client app developers do not need to create or use an existing instance of Azure AD B2C.
 
+## Simcoe AI's Application workflow
+
+An overview of Simcoe AI's application workflow can be found [here](app-workflow-overview.md).
+
 ## Simcoe AI API documentation
 
 A thorough document of Typescript code, submitted payloads and received responses via signalR is [found here](Requests.md). 
